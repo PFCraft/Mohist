@@ -179,7 +179,7 @@ project(':forge') {
         INSTALLER_TOOLS = 'net.minecraftforge:installertools:1.1.11'
     }
 
-    version = '1.16.3-34.1.41'
+    version = '1.16.3-34.1.42'
     println('Forge Version: ' + version)
 
     patcher {
@@ -852,7 +852,7 @@ task setup() {
 }
 
 def JenkinsNumber() {
-    def conn = new URL("https://ci.codemc.io/job/Mohist-Community/job/debug/api/json").openConnection();
+    def conn = new URL("https://ci.codemc.io/job/Mohist-Community/job/Mohist-1.16.3/api/json").openConnection();
     conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0");
     conn.connect()
     def root = conn.content.text
