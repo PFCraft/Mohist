@@ -31,7 +31,7 @@
  import net.minecraft.util.math.BlockPos;
  import net.minecraft.util.math.MathHelper;
  import net.minecraft.util.registry.DynamicRegistries;
-@@ -53,22 +56,31 @@
+@@ -53,22 +56,32 @@
  import net.minecraft.world.server.ServerWorld;
  import net.minecraft.world.storage.IServerConfiguration;
  import net.minecraft.world.storage.SaveFormat;
@@ -59,15 +59,15 @@
     private MinecraftServerGui field_213225_q;
  
 -   public DedicatedServer(Thread p_i232601_1_, DynamicRegistries.Impl p_i232601_2_, SaveFormat.LevelSave p_i232601_3_, ResourcePackList p_i232601_4_, DataPackRegistries p_i232601_5_, IServerConfiguration p_i232601_6_, ServerPropertiesProvider p_i232601_7_, DataFixer p_i232601_8_, MinecraftSessionService p_i232601_9_, GameProfileRepository p_i232601_10_, PlayerProfileCache p_i232601_11_, IChunkStatusListenerFactory p_i232601_12_) {
--      super(p_i232601_1_, p_i232601_2_, p_i232601_3_, p_i232601_6_, p_i232601_4_, Proxy.NO_PROXY, p_i232601_8_, p_i232601_5_, p_i232601_9_, p_i232601_10_, p_i232601_11_, p_i232601_12_);
 +   // CraftBukkit start - Signature changed
 +   public DedicatedServer(joptsimple.OptionSet options, DatapackCodec datapackconfiguration, Thread p_i232601_1_, DynamicRegistries.Impl p_i232601_2_, SaveFormat.LevelSave p_i232601_3_, ResourcePackList p_i232601_4_, DataPackRegistries p_i232601_5_, IServerConfiguration p_i232601_6_, ServerPropertiesProvider p_i232601_7_, DataFixer p_i232601_8_, MinecraftSessionService p_i232601_9_, GameProfileRepository p_i232601_10_, PlayerProfileCache p_i232601_11_, IChunkStatusListenerFactory p_i232601_12_) {
-+      super(options, datapackconfiguration, p_i232601_1_, p_i232601_2_, p_i232601_3_, p_i232601_6_, p_i232601_4_, Proxy.NO_PROXY, p_i232601_8_, p_i232601_5_, p_i232601_9_, p_i232601_10_, p_i232601_11_, p_i232601_12_);
+       super(p_i232601_1_, p_i232601_2_, p_i232601_3_, p_i232601_6_, p_i232601_4_, Proxy.NO_PROXY, p_i232601_8_, p_i232601_5_, p_i232601_9_, p_i232601_10_, p_i232601_11_, p_i232601_12_);
 +      // CraftBukkit end
++      betterCavesFix(options, datapackconfiguration);
        this.field_71340_o = p_i232601_7_;
        this.field_184115_n = new RConConsoleSource(this);
     }
-@@ -76,12 +88,38 @@
+@@ -76,12 +89,38 @@
     public boolean func_71197_b() throws IOException {
        Thread thread = new Thread("Server console handler") {
           public void run() {
@@ -110,7 +110,7 @@
                 }
              } catch (IOException ioexception1) {
                 DedicatedServer.field_155771_h.error("Exception handling console input", (Throwable)ioexception1);
-@@ -89,6 +127,21 @@
+@@ -89,6 +128,21 @@
  
           }
        };
@@ -132,7 +132,7 @@
        thread.setDaemon(true);
        thread.setUncaughtExceptionHandler(new DefaultUncaughtExceptionHandler(field_155771_h));
        thread.start();
-@@ -107,6 +160,12 @@
+@@ -107,6 +161,12 @@
           this.func_71189_e(serverproperties.field_219009_c);
        }
  
@@ -145,7 +145,7 @@
        this.func_71188_g(serverproperties.field_219012_f);
        this.func_71245_h(serverproperties.field_219013_g);
        this.func_180507_a_(serverproperties.field_219014_h, this.func_184113_aK());
-@@ -114,7 +173,7 @@
+@@ -114,7 +174,7 @@
        this.func_104055_i(serverproperties.field_219016_j);
        super.func_143006_e(serverproperties.field_219005_R.get());
        this.func_205741_k(serverproperties.field_219017_k);
@@ -154,7 +154,7 @@
        field_155771_h.info("Default game type: {}", (Object)serverproperties.field_219020_n);
        InetAddress inetaddress = null;
        if (!this.func_71211_k().isEmpty()) {
-@@ -138,6 +197,12 @@
+@@ -138,6 +198,12 @@
           return false;
        }
  
@@ -167,7 +167,7 @@
        if (!this.func_71266_T()) {
           field_155771_h.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
           field_155771_h.warn("The server will make no attempt to authenticate usernames. Beware.");
-@@ -152,17 +217,20 @@
+@@ -152,17 +218,20 @@
        if (!PreYggdrasilConverter.func_219587_e(this)) {
           return false;
        } else {
@@ -181,7 +181,7 @@
 +         if (!net.minecraftforge.fml.server.ServerLifecycleHooks.handleServerAboutToStart(this)) return false;
           field_155771_h.info("Preparing level \"{}\"", (Object)this.func_230542_k__());
 -         this.func_240800_l__();
-+         this.loadWorld(field_71310_m.func_237282_a_()); // CraftBukkit
++         this.func_240800_l__(); // CraftBukkit // Mohist
           long j = Util.func_211178_c() - i;
           String s = String.format(Locale.ROOT, "%.3fs", (double)j / 1.0E9D);
           field_155771_h.info("Done ({})! For help, type \"help\"", (Object)s);
@@ -190,7 +190,7 @@
           if (serverproperties.field_219027_u != null) {
              this.func_200252_aR().func_223585_a(GameRules.field_223620_w).func_223570_a(serverproperties.field_219027_u, this);
           }
-@@ -175,23 +243,17 @@
+@@ -175,23 +244,17 @@
           if (serverproperties.field_219030_x) {
              field_155771_h.info("Starting remote control listener");
              this.field_71339_n = MainThread.func_242130_a(this);
@@ -218,7 +218,7 @@
     }
  
     public boolean func_230537_U_() {
-@@ -272,7 +334,7 @@
+@@ -272,7 +335,7 @@
        if (this.field_71342_m != null) {
           this.field_71342_m.func_219591_b();
        }
@@ -227,7 +227,7 @@
     }
  
     public void func_71190_q(BooleanSupplier p_71190_1_) {
-@@ -295,11 +357,21 @@
+@@ -295,11 +358,21 @@
     }
  
     public void func_71333_ah() {
@@ -250,7 +250,7 @@
     }
  
     public boolean func_71262_S() {
-@@ -402,7 +474,7 @@
+@@ -402,7 +475,7 @@
        return this.func_213221_d_().field_219003_P;
     }
  
@@ -259,7 +259,7 @@
        return this.func_213221_d_().field_219004_Q;
     }
  
-@@ -481,13 +553,39 @@
+@@ -481,13 +554,39 @@
     }
  
     public String func_71258_A() {
@@ -301,7 +301,7 @@
        });
        return this.field_184115_n.func_70008_c();
     }
-@@ -507,6 +605,11 @@
+@@ -507,6 +606,11 @@
        return false;
     }
  
@@ -313,7 +313,7 @@
     public int func_230512_b_(int p_230512_1_) {
        return this.func_213221_d_().field_241081_R_ * p_230512_1_ / 100;
     }
-@@ -518,4 +621,15 @@
+@@ -518,4 +622,15 @@
     public boolean func_230540_aS_() {
        return this.field_71340_o.func_219034_a().field_241078_O_;
     }
