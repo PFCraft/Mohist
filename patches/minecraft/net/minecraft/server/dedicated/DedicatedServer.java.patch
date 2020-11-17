@@ -180,8 +180,7 @@
           PlayerProfileCache.func_187320_a(this.func_71266_T());
 +         if (!net.minecraftforge.fml.server.ServerLifecycleHooks.handleServerAboutToStart(this)) return false;
           field_155771_h.info("Preparing level \"{}\"", (Object)this.func_230542_k__());
--         this.func_240800_l__();
-+         this.func_240800_l__(); // CraftBukkit // Mohist
+          this.func_240800_l__();
           long j = Util.func_211178_c() - i;
           String s = String.format(Locale.ROOT, "%.3fs", (double)j / 1.0E9D);
           field_155771_h.info("Done ({})! For help, type \"help\"", (Object)s);

@@ -588,7 +588,23 @@
           this.func_217465_m(p_217440_1_);
           return true;
        }
-@@ -855,6 +1006,15 @@
+@@ -846,15 +997,29 @@
+    }
+ 
+    public boolean func_242106_g(Entity p_242106_1_) {
+-      if (p_242106_1_.func_226276_cg_().anyMatch(this::func_217478_l)) {
++      return addAllEntitiesSafely(p_242106_1_, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.DEFAULT);
++   }
++
++   public boolean addAllEntitiesSafely(Entity entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason reason) {
++      // CraftBukkit end
++      if (entity.func_226276_cg_().anyMatch(this::func_217478_l)) {
+          return false;
+       } else {
+-         this.func_242417_l(p_242106_1_);
++         this.addAllEntities(entity, reason); // CraftBukkit
+          return true;
+       }
     }
  
     public void func_217466_a(Chunk p_217466_1_) {
@@ -604,7 +620,7 @@
        this.field_147483_b.addAll(p_217466_1_.func_177434_r().values());
        ClassInheritanceMultiMap<Entity>[] aclassinheritancemultimap = p_217466_1_.func_177429_s();
        int i = aclassinheritancemultimap.length;
-@@ -874,12 +1034,41 @@
+@@ -874,12 +1039,41 @@
  
     }
  
@@ -647,7 +663,7 @@
  
        this.field_175741_N.remove(p_217484_1_.func_110124_au());
        this.func_72863_F().func_217226_b(p_217484_1_);
-@@ -889,13 +1078,23 @@
+@@ -889,13 +1083,23 @@
        }
  
        this.func_96441_U().func_181140_a(p_217484_1_);
@@ -671,7 +687,7 @@
        if (this.field_217492_a) {
           this.field_217499_z.add(p_217465_1_);
        } else {
-@@ -908,20 +1107,31 @@
+@@ -908,20 +1112,31 @@
  
           this.field_175741_N.put(p_217465_1_.func_110124_au(), p_217465_1_);
           this.func_72863_F().func_217230_c(p_217465_1_);
@@ -704,7 +720,7 @@
        }
     }
  
-@@ -934,17 +1144,47 @@
+@@ -934,17 +1149,47 @@
     }
  
     public void func_217434_e(ServerPlayerEntity p_217434_1_) {
@@ -754,7 +770,7 @@
              if (d0 * d0 + d1 * d1 + d2 * d2 < 1024.0D) {
                 serverplayerentity.field_71135_a.func_147359_a(new SAnimateBlockBreakPacket(p_175715_1_, p_175715_2_, p_175715_3_));
              }
-@@ -954,10 +1194,20 @@
+@@ -954,10 +1199,20 @@
     }
  
     public void func_184148_a(@Nullable PlayerEntity p_184148_1_, double p_184148_2_, double p_184148_4_, double p_184148_6_, SoundEvent p_184148_8_, SoundCategory p_184148_9_, float p_184148_10_, float p_184148_11_) {
@@ -775,7 +791,7 @@
        this.field_73061_a.func_184103_al().func_148543_a(p_217384_1_, p_217384_2_.func_226277_ct_(), p_217384_2_.func_226278_cu_(), p_217384_2_.func_226281_cx_(), p_217384_5_ > 1.0F ? (double)(16.0F * p_217384_5_) : 16.0D, this.func_234923_W_(), new SSpawnMovingSoundEffectPacket(p_217384_3_, p_217384_4_, p_217384_2_, p_217384_5_, p_217384_6_));
     }
  
-@@ -992,9 +1242,17 @@
+@@ -992,9 +1247,17 @@
     }
  
     public Explosion func_230546_a_(@Nullable Entity p_230546_1_, @Nullable DamageSource p_230546_2_, @Nullable ExplosionContext p_230546_3_, double p_230546_4_, double p_230546_6_, double p_230546_8_, float p_230546_10_, boolean p_230546_11_, Explosion.Mode p_230546_12_) {
@@ -796,7 +812,7 @@
        if (p_230546_12_ == Explosion.Mode.NONE) {
           explosion.func_180342_d();
        }
-@@ -1049,12 +1307,18 @@
+@@ -1049,12 +1312,18 @@
     }
  
     public <T extends IParticleData> int func_195598_a(T p_195598_1_, double p_195598_2_, double p_195598_4_, double p_195598_6_, int p_195598_8_, double p_195598_9_, double p_195598_11_, double p_195598_13_, double p_195598_15_) {
@@ -817,7 +833,7 @@
              ++i;
           }
        }
-@@ -1093,7 +1357,7 @@
+@@ -1093,7 +1362,7 @@
  
     @Nullable
     public BlockPos func_241117_a_(Structure<?> p_241117_1_, BlockPos p_241117_2_, int p_241117_3_, boolean p_241117_4_) {
@@ -826,7 +842,7 @@
     }
  
     @Nullable
-@@ -1126,7 +1390,13 @@
+@@ -1126,7 +1395,13 @@
     @Nullable
     public MapData func_217406_a(String p_217406_1_) {
        return this.func_73046_m().func_241755_D_().func_217481_x().func_215753_b(() -> {
@@ -841,7 +857,7 @@
        }, p_217406_1_);
     }
  
-@@ -1328,6 +1598,11 @@
+@@ -1328,6 +1603,11 @@
  
     public void func_230547_a_(BlockPos p_230547_1_, Block p_230547_2_) {
        if (!this.func_234925_Z_()) {
@@ -853,7 +869,7 @@
           this.func_195593_d(p_230547_1_, p_230547_2_);
        }
  
-@@ -1347,11 +1622,11 @@
+@@ -1347,11 +1627,11 @@
     }
  
     public boolean func_241109_A_() {
@@ -867,7 +883,7 @@
     }
  
     @Nullable
-@@ -1368,15 +1643,40 @@
+@@ -1368,15 +1648,40 @@
     }
  
     public static void func_241121_a_(ServerWorld p_241121_0_) {
