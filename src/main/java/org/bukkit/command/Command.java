@@ -31,7 +31,6 @@ public abstract class Command {
     private CommandMap commandMap = null;
     private String permission;
     private String permissionMessage;
-    public co.aikar.timings.Timing timings; // Spigot
     public String getTimingName() {return getName();} // Spigot
 
     protected Command(String name) {

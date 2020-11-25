@@ -292,7 +292,7 @@ public class JavaPluginLoader implements PluginLoader {
                 }
             }
 
-            EventExecutor executor = new co.aikar.timings.TimedEventExecutor(EventExecutor.create(method, eventClass), plugin, method, eventClass); // Spigot // Paper - Use factory method `EventExecutor.create()`
+            EventExecutor executor = EventExecutor.create(method, eventClass); // Spigot // Paper - Use factory method `EventExecutor.create()`
             // Spigot // Paper - Use factory method `EventExecutor.create()`
             eventSet.add(new RegisteredListener(listener, executor, eh.priority(), plugin, eh.ignoreCancelled()));
         }

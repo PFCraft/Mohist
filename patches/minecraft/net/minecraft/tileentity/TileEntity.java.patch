@@ -1,14 +1,14 @@
 --- ../src-base/minecraft/net/minecraft/tileentity/TileEntity.java
 +++ ../src-work/minecraft/net/minecraft/tileentity/TileEntity.java
-@@ -1,5 +1,7 @@
+@@ -1,6 +1,7 @@
  package net.minecraft.tileentity;
  
-+import co.aikar.timings.MinecraftTimings;
-+import co.aikar.timings.Timing;
  import javax.annotation.Nullable;
++import jdk.nashorn.internal.runtime.Timing;
  import net.minecraft.block.Block;
  import net.minecraft.block.BlockJukebox;
-@@ -20,22 +22,30 @@
+ import net.minecraft.block.state.IBlockState;
+@@ -20,12 +21,14 @@
  import net.minecraftforge.fml.relauncher.SideOnly;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
@@ -25,11 +25,7 @@
      protected BlockPos field_174879_c = BlockPos.field_177992_a;
      protected boolean field_145846_f;
      private int field_145847_g = -1;
-     protected Block field_145854_h;
-+    public Timing tickTimer = MinecraftTimings.getTileEntityTimings(this); // Paper
- 
-     public static void func_190560_a(String p_190560_0_, Class <? extends TileEntity > p_190560_1_)
-     {
+@@ -36,6 +39,11 @@
          field_190562_f.func_82595_a(new ResourceLocation(p_190560_0_), p_190560_1_);
      }
  
@@ -41,7 +37,7 @@
      @Nullable
      public static ResourceLocation func_190559_a(Class <? extends TileEntity > p_190559_0_)
      {
-@@ -60,6 +70,8 @@
+@@ -60,6 +68,8 @@
      public void func_145839_a(NBTTagCompound p_145839_1_)
      {
          this.field_174879_c = new BlockPos(p_145839_1_.func_74762_e("x"), p_145839_1_.func_74762_e("y"), p_145839_1_.func_74762_e("z"));
@@ -50,7 +46,7 @@
      }
  
      public NBTTagCompound func_189515_b(NBTTagCompound p_189515_1_)
-@@ -81,6 +93,8 @@
+@@ -81,6 +91,8 @@
              p_189516_1_.func_74768_a("x", this.field_174879_c.func_177958_n());
              p_189516_1_.func_74768_a("y", this.field_174879_c.func_177956_o());
              p_189516_1_.func_74768_a("z", this.field_174879_c.func_177952_p());
@@ -59,7 +55,7 @@
              return p_189516_1_;
          }
      }
-@@ -90,10 +104,11 @@
+@@ -90,10 +102,11 @@
      {
          TileEntity tileentity = null;
          String s = p_190200_1_.func_74779_i("id");
@@ -72,7 +68,7 @@
  
              if (oclass != null)
              {
-@@ -103,6 +118,8 @@
+@@ -103,6 +116,8 @@
          catch (Throwable throwable1)
          {
              field_145852_a.error("Failed to create block entity {}", s, throwable1);
@@ -81,7 +77,7 @@
          }
  
          if (tileentity != null)
-@@ -115,6 +132,8 @@
+@@ -115,6 +130,8 @@
              catch (Throwable throwable)
              {
                  field_145852_a.error("Failed to load data for block entity {}", s, throwable);
@@ -90,7 +86,7 @@
                  tileentity = null;
              }
          }
-@@ -156,7 +175,6 @@
+@@ -156,7 +173,6 @@
          }
      }
  
@@ -98,7 +94,7 @@
      public double func_145835_a(double p_145835_1_, double p_145835_3_, double p_145835_5_)
      {
          double d0 = (double)this.field_174879_c.func_177958_n() + 0.5D - p_145835_1_;
-@@ -244,7 +262,7 @@
+@@ -244,7 +260,7 @@
  
                      try
                      {
@@ -107,7 +103,7 @@
                      }
                      catch (Throwable var3)
                      {
-@@ -297,6 +315,204 @@
+@@ -297,6 +313,204 @@
      {
      }
  
@@ -312,7 +308,7 @@
      static
      {
          func_190560_a("furnace", TileEntityFurnace.class);
-@@ -325,4 +541,11 @@
+@@ -325,4 +539,11 @@
          func_190560_a("shulker_box", TileEntityShulkerBox.class);
          func_190560_a("bed", TileEntityBed.class);
      }

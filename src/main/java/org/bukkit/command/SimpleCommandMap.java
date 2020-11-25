@@ -1,7 +1,7 @@
 package org.bukkit.command;
 
-import co.aikar.timings.Timing;
 import com.mohistmc.command.*;
+import jdk.nashorn.internal.runtime.Timing;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 import org.bukkit.Server;
@@ -26,7 +26,6 @@ public class SimpleCommandMap implements CommandMap {
     private void setDefaultCommands() {
         register("bukkit", new VersionCommand("version"));
         register("bukkit", new PluginsCommand("plugins"));
-        register("bukkit", new co.aikar.timings.TimingsCommand("timings")); // Spigot
         register("bukkit", new ReloadCommand("reload"));
         // Mohist
         register("mohist", new MohistCommand("mohist"));
@@ -65,7 +64,6 @@ public class SimpleCommandMap implements CommandMap {
      * {@inheritDoc}
      */
     public boolean register(String label, String fallbackPrefix, Command command) {
-        command.timings = co.aikar.timings.TimingsManager.getCommandTiming(fallbackPrefix, command); // Spigot
         label = label.toLowerCase(java.util.Locale.ENGLISH).trim();
         fallbackPrefix = fallbackPrefix.toLowerCase(java.util.Locale.ENGLISH).trim();
         boolean registered = register(label, command, false, fallbackPrefix);
@@ -141,13 +139,7 @@ public class SimpleCommandMap implements CommandMap {
             return false;
         }
 
-        // Paper start - Plugins do weird things to workaround normal registration
-        if (target.timings == null) {
-            target.timings = co.aikar.timings.TimingsManager.getCommandTiming(null, target);
-        }
-        // Paper end
-
-        try (Timing ignored = target.timings.startTiming()) { // Paper - use try with resources
+        try{ // Paper - use try with resources
             // Note: we don't return the result of target.execute as thats success / failure, we return handled (true) or not handled (false)
             target.execute(sender, sentCommandLabel, Arrays.copyOfRange(args, 1, args.length));
         } catch (CommandException ex) {

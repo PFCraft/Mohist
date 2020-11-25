@@ -90,34 +90,16 @@
          return chunk;
      }
  
-@@ -108,6 +148,7 @@
- 
-         if (chunk == null)
-         {
-+            field_73251_h.timings.syncChunkLoadTimer.startTiming(); // Spigot
-             long i = ChunkPos.func_77272_a(p_186025_1_, p_186025_2_);
- 
-             try
-@@ -126,7 +167,8 @@
+@@ -126,7 +166,7 @@
  
              this.field_73244_f.put(i, chunk);
              chunk.func_76631_c();
 -            chunk.func_186030_a(this, this.field_186029_c);
 +            chunk.loadNearby(this, this.field_186029_c, true);
-+            field_73251_h.timings.syncChunkLoadTimer.stopTiming(); // Spigot
          }
  
          return chunk;
-@@ -168,7 +210,7 @@
- 
-     private void func_73242_b(Chunk p_73242_1_)
-     {
--        try
-+        try (co.aikar.timings.Timing timed = field_73251_h.timings.chunkSaveData.startTiming())
-         {
-             p_73242_1_.func_177432_b(this.field_73251_h.func_82737_E());
-             this.field_73247_e.func_75816_a(this.field_73251_h, p_73242_1_);
-@@ -224,6 +266,11 @@
+@@ -224,6 +264,11 @@
          {
              if (!this.field_73248_b.isEmpty())
              {
@@ -129,7 +111,7 @@
                  Iterator<Long> iterator = this.field_73248_b.iterator();
  
                  for (int i = 0; i < 100 && iterator.hasNext(); iterator.remove())
-@@ -233,21 +280,56 @@
+@@ -233,21 +278,56 @@
  
                      if (chunk != null && chunk.field_189550_d)
                      {
