@@ -49,121 +49,127 @@
          this.field_149849_a.put(p_180686_1_, Integer.valueOf(p_180686_2_));
          this.field_149848_b.put(p_180686_1_, Integer.valueOf(p_180686_3_));
      }
-@@ -126,24 +139,20 @@
+@@ -124,118 +137,9 @@
+ 
+     public void func_180650_b(World p_180650_1_, BlockPos p_180650_2_, IBlockState p_180650_3_, Random p_180650_4_)
      {
-         if (p_180650_1_.func_82736_K().func_82766_b("doFireTick"))
-         {
-+            if (!p_180650_1_.func_175697_a(p_180650_2_, 2)) return; // Forge: prevent loading unloaded chunks when spreading fire
-             if (!this.func_176196_c(p_180650_1_, p_180650_2_))
-             {
+-        if (p_180650_1_.func_82736_K().func_82766_b("doFireTick"))
+-        {
+-            if (!this.func_176196_c(p_180650_1_, p_180650_2_))
+-            {
 -                p_180650_1_.func_175698_g(p_180650_2_);
-+                fireExtinguished(p_180650_1_, p_180650_2_); // CraftBukkit - invalid place location
-             }
- 
-             Block block = p_180650_1_.func_180495_p(p_180650_2_.func_177977_b()).func_177230_c();
+-            }
+-
+-            Block block = p_180650_1_.func_180495_p(p_180650_2_.func_177977_b()).func_177230_c();
 -            boolean flag = block == Blocks.field_150424_aL || block == Blocks.field_189877_df;
-+            boolean flag = block.isFireSource(p_180650_1_, p_180650_2_.func_177977_b(), EnumFacing.UP);
- 
+-
 -            if (p_180650_1_.field_73011_w instanceof WorldProviderEnd && block == Blocks.field_150357_h)
 -            {
 -                flag = true;
 -            }
 -
-             int i = ((Integer)p_180650_3_.func_177229_b(field_176543_a)).intValue();
- 
-             if (!flag && p_180650_1_.func_72896_J() && this.func_176537_d(p_180650_1_, p_180650_2_) && p_180650_4_.nextFloat() < 0.2F + (float)i * 0.03F)
-             {
+-            int i = ((Integer)p_180650_3_.func_177229_b(field_176543_a)).intValue();
+-
+-            if (!flag && p_180650_1_.func_72896_J() && this.func_176537_d(p_180650_1_, p_180650_2_) && p_180650_4_.nextFloat() < 0.2F + (float)i * 0.03F)
+-            {
 -                p_180650_1_.func_175698_g(p_180650_2_);
-+                fireExtinguished(p_180650_1_, p_180650_2_); // CraftBukkit - extinguished by rain
-             }
-             else
-             {
-@@ -159,17 +168,17 @@
-                 {
-                     if (!this.func_176533_e(p_180650_1_, p_180650_2_))
-                     {
+-            }
+-            else
+-            {
+-                if (i < 15)
+-                {
+-                    p_180650_3_ = p_180650_3_.func_177226_a(field_176543_a, Integer.valueOf(i + p_180650_4_.nextInt(3) / 2));
+-                    p_180650_1_.func_180501_a(p_180650_2_, p_180650_3_, 4);
+-                }
+-
+-                p_180650_1_.func_175684_a(p_180650_2_, this, this.func_149738_a(p_180650_1_) + p_180650_4_.nextInt(10));
+-
+-                if (!flag)
+-                {
+-                    if (!this.func_176533_e(p_180650_1_, p_180650_2_))
+-                    {
 -                        if (!p_180650_1_.func_180495_p(p_180650_2_.func_177977_b()).func_185896_q() || i > 3)
-+                        if (!p_180650_1_.func_180495_p(p_180650_2_.func_177977_b()).isSideSolid(p_180650_1_, p_180650_2_.func_177977_b(), EnumFacing.UP) || i > 3)
-                         {
+-                        {
 -                            p_180650_1_.func_175698_g(p_180650_2_);
-+                            fireExtinguished(p_180650_1_, p_180650_2_);
-                         }
- 
-                         return;
-                     }
- 
+-                        }
+-
+-                        return;
+-                    }
+-
 -                    if (!this.func_176535_e(p_180650_1_, p_180650_2_.func_177977_b()) && i == 15 && p_180650_4_.nextInt(4) == 0)
-+                    if (!this.canCatchFire(p_180650_1_, p_180650_2_.func_177977_b(), EnumFacing.UP) && i == 15 && p_180650_4_.nextInt(4) == 0)
-                     {
+-                    {
 -                        p_180650_1_.func_175698_g(p_180650_2_);
-+                        fireExtinguished(p_180650_1_, p_180650_2_);
-                         return;
-                     }
-                 }
-@@ -182,12 +191,12 @@
-                     j = -50;
-                 }
- 
+-                        return;
+-                    }
+-                }
+-
+-                boolean flag1 = p_180650_1_.func_180502_D(p_180650_2_);
+-                int j = 0;
+-
+-                if (flag1)
+-                {
+-                    j = -50;
+-                }
+-
 -                this.func_176536_a(p_180650_1_, p_180650_2_.func_177974_f(), 300 + j, p_180650_4_, i);
 -                this.func_176536_a(p_180650_1_, p_180650_2_.func_177976_e(), 300 + j, p_180650_4_, i);
 -                this.func_176536_a(p_180650_1_, p_180650_2_.func_177977_b(), 250 + j, p_180650_4_, i);
 -                this.func_176536_a(p_180650_1_, p_180650_2_.func_177984_a(), 250 + j, p_180650_4_, i);
 -                this.func_176536_a(p_180650_1_, p_180650_2_.func_177978_c(), 300 + j, p_180650_4_, i);
 -                this.func_176536_a(p_180650_1_, p_180650_2_.func_177968_d(), 300 + j, p_180650_4_, i);
-+                this.tryCatchFire(p_180650_1_, p_180650_2_.func_177974_f(), 300 + j, p_180650_4_, i, EnumFacing.WEST);
-+                this.tryCatchFire(p_180650_1_, p_180650_2_.func_177976_e(), 300 + j, p_180650_4_, i, EnumFacing.EAST);
-+                this.tryCatchFire(p_180650_1_, p_180650_2_.func_177977_b(), 250 + j, p_180650_4_, i, EnumFacing.UP);
-+                this.tryCatchFire(p_180650_1_, p_180650_2_.func_177984_a(), 250 + j, p_180650_4_, i, EnumFacing.DOWN);
-+                this.tryCatchFire(p_180650_1_, p_180650_2_.func_177978_c(), 300 + j, p_180650_4_, i, EnumFacing.SOUTH);
-+                this.tryCatchFire(p_180650_1_, p_180650_2_.func_177968_d(), 300 + j, p_180650_4_, i, EnumFacing.NORTH);
- 
-                 for (int k = -1; k <= 1; ++k)
-                 {
-@@ -205,6 +214,7 @@
-                                 }
- 
-                                 BlockPos blockpos = p_180650_2_.func_177982_a(k, i1, l);
-+                                if (!p_180650_1_.func_175667_e(blockpos)) continue; // Paper
-                                 int k1 = this.func_176538_m(p_180650_1_, blockpos);
- 
-                                 if (k1 > 0)
-@@ -225,7 +235,26 @@
-                                             i2 = 15;
-                                         }
- 
+-
+-                for (int k = -1; k <= 1; ++k)
+-                {
+-                    for (int l = -1; l <= 1; ++l)
+-                    {
+-                        for (int i1 = -1; i1 <= 4; ++i1)
+-                        {
+-                            if (k != 0 || i1 != 0 || l != 0)
+-                            {
+-                                int j1 = 100;
+-
+-                                if (i1 > 1)
+-                                {
+-                                    j1 += (i1 - 1) * 100;
+-                                }
+-
+-                                BlockPos blockpos = p_180650_2_.func_177982_a(k, i1, l);
+-                                int k1 = this.func_176538_m(p_180650_1_, blockpos);
+-
+-                                if (k1 > 0)
+-                                {
+-                                    int l1 = (k1 + 40 + p_180650_1_.func_175659_aa().func_151525_a() * 7) / (i + 30);
+-
+-                                    if (flag1)
+-                                    {
+-                                        l1 /= 2;
+-                                    }
+-
+-                                    if (l1 > 0 && p_180650_4_.nextInt(j1) <= l1 && (!p_180650_1_.func_72896_J() || !this.func_176537_d(p_180650_1_, blockpos)))
+-                                    {
+-                                        int i2 = i + p_180650_4_.nextInt(5) / 4;
+-
+-                                        if (i2 > 15)
+-                                        {
+-                                            i2 = 15;
+-                                        }
+-
 -                                        p_180650_1_.func_180501_a(blockpos, p_180650_3_.func_177226_a(field_176543_a, Integer.valueOf(i2)), 3);
-+                                        // CraftBukkit start - Call to stop spread of fire
-+                                        if (p_180650_1_.func_180495_p(blockpos) != Blocks.field_150480_ab) {
-+                                            if (CraftEventFactory.callBlockIgniteEvent(p_180650_1_, blockpos.func_177958_n(), blockpos.func_177956_o(), blockpos.func_177952_p(), p_180650_2_.func_177958_n(), p_180650_2_.func_177956_o(), p_180650_2_.func_177952_p()).isCancelled()) {
-+                                                continue;
-+                                            }
-+
-+                                            org.bukkit.Server server = p_180650_1_.getServer();
-+                                            org.bukkit.World bworld = p_180650_1_.getWorld();
-+                                            org.bukkit.block.BlockState blockState = bworld.getBlockAt(blockpos.func_177958_n(), blockpos.func_177956_o(), blockpos.func_177952_p()).getState();
-+                                            blockState.setTypeId(Block.func_149682_b(this));
-+                                            blockState.setData(new org.bukkit.material.MaterialData(Block.func_149682_b(this), (byte) i2));
-+
-+                                            BlockSpreadEvent spreadEvent = new BlockSpreadEvent(blockState.getBlock(), bworld.getBlockAt(p_180650_2_.func_177958_n(), p_180650_2_.func_177956_o(), p_180650_2_.func_177952_p()), blockState);
-+                                            server.getPluginManager().callEvent(spreadEvent);
-+
-+                                            if (!spreadEvent.isCancelled()) {
-+                                                blockState.update(true);
-+                                            }
-+                                        }
-+                                        // CraftBukkit end
-                                     }
-                                 }
-                             }
-@@ -236,6 +265,7 @@
-         }
+-                                    }
+-                                }
+-                            }
+-                        }
+-                    }
+-                }
+-            }
+-        }
      }
  
 +
      protected boolean func_176537_d(World p_176537_1_, BlockPos p_176537_2_)
      {
          return p_176537_1_.func_175727_C(p_176537_2_) || p_176537_1_.func_175727_C(p_176537_2_.func_177976_e()) || p_176537_1_.func_175727_C(p_176537_2_.func_177974_f()) || p_176537_1_.func_175727_C(p_176537_2_.func_177978_c()) || p_176537_1_.func_175727_C(p_176537_2_.func_177968_d());
-@@ -246,46 +276,63 @@
+@@ -246,46 +150,63 @@
          return false;
      }
  
@@ -246,7 +252,7 @@
          }
      }
  
-@@ -293,7 +340,7 @@
+@@ -293,7 +214,7 @@
      {
          for (EnumFacing enumfacing : EnumFacing.values())
          {
@@ -255,7 +261,7 @@
              {
                  return true;
              }
-@@ -314,7 +361,7 @@
+@@ -314,7 +235,7 @@
  
              for (EnumFacing enumfacing : EnumFacing.values())
              {
@@ -264,7 +270,7 @@
              }
  
              return i;
-@@ -326,9 +373,10 @@
+@@ -326,9 +247,10 @@
          return false;
      }
  
@@ -276,7 +282,7 @@
      }
  
      public boolean func_176196_c(World p_176196_1_, BlockPos p_176196_2_)
-@@ -340,7 +388,7 @@
+@@ -340,7 +262,7 @@
      {
          if (!p_189540_2_.func_180495_p(p_189540_3_.func_177977_b()).func_185896_q() && !this.func_176533_e(p_189540_2_, p_189540_3_))
          {
@@ -285,7 +291,7 @@
          }
      }
  
-@@ -350,7 +398,7 @@
+@@ -350,7 +272,7 @@
          {
              if (!p_176213_1_.func_180495_p(p_176213_2_.func_177977_b()).func_185896_q() && !this.func_176533_e(p_176213_1_, p_176213_2_))
              {
@@ -294,7 +300,7 @@
              }
              else
              {
-@@ -372,9 +420,9 @@
+@@ -372,9 +294,9 @@
              p_180655_2_.func_184134_a((double)((float)p_180655_3_.func_177958_n() + 0.5F), (double)((float)p_180655_3_.func_177956_o() + 0.5F), (double)((float)p_180655_3_.func_177952_p() + 0.5F), SoundEvents.field_187643_bs, SoundCategory.BLOCKS, 1.0F + p_180655_4_.nextFloat(), p_180655_4_.nextFloat() * 0.7F + 0.3F, false);
          }
  
@@ -306,7 +312,7 @@
              {
                  for (int j = 0; j < 2; ++j)
                  {
-@@ -385,7 +433,7 @@
+@@ -385,7 +307,7 @@
                  }
              }
  
@@ -315,7 +321,7 @@
              {
                  for (int k = 0; k < 2; ++k)
                  {
-@@ -396,7 +444,7 @@
+@@ -396,7 +318,7 @@
                  }
              }
  
@@ -324,7 +330,7 @@
              {
                  for (int l = 0; l < 2; ++l)
                  {
-@@ -407,7 +455,7 @@
+@@ -407,7 +329,7 @@
                  }
              }
  
@@ -333,7 +339,7 @@
              {
                  for (int i1 = 0; i1 < 2; ++i1)
                  {
-@@ -418,7 +466,7 @@
+@@ -418,7 +340,7 @@
                  }
              }
  
@@ -342,7 +348,7 @@
              {
                  for (int j1 = 0; j1 < 2; ++j1)
                  {
-@@ -462,8 +510,26 @@
+@@ -462,8 +384,26 @@
          return new BlockStateContainer(this, new IProperty[] {field_176543_a, field_176545_N, field_176546_O, field_176541_P, field_176539_Q, field_176542_R});
      }
  

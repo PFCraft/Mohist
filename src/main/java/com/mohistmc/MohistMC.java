@@ -24,8 +24,6 @@ public class MohistMC {
 
     public static void main(String[] args) throws Throwable {
         MohistConfigUtil.copyMohistConfig();
-        if (Float.parseFloat(System.getProperty("java.class.version")) != 52.0 || MohistConfigUtil.bMohist("use_custom_java8", "false"))
-            DownloadJava.run(args);
         if(MohistConfigUtil.bMohist("showlogo")) {
             System.out.println("\n" + "\n" +
                     " __    __   ______   __  __   __   ______   ______  \n" +
@@ -40,8 +38,6 @@ public class MohistMC {
             System.setProperty("log4j.configurationFile", "log4j2_mohist.xml");
         }
 
-        if (MohistConfigUtil.bMohist("check_libraries")) DownloadLibraries.run();
-
         //MappingFix.init();
         MappingFix.copyMappings();
 
@@ -51,9 +47,6 @@ public class MohistMC {
             EulaUtil.writeInfos();
         }
 
-        if (MohistConfigUtil.bMohist("check_update")) UpdateUtils.versionCheck();
-        if (!MohistConfigUtil.bMohist("disable_plugins_blacklist", "false")) AutoDeletePlugins.jar();
-        if (!MohistConfigUtil.bMohist("disable_mods_blacklist", "false")) AutoDeleteMods.jar();
         changeConf();
 
         Class.forName("net.minecraftforge.fml.relauncher.ServerLaunchWrapper").getDeclaredMethod("main", String[].class).invoke(null, new Object[]{args});
