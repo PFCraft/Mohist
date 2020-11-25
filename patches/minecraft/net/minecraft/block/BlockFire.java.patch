@@ -163,7 +163,7 @@
      protected boolean func_176537_d(World p_176537_1_, BlockPos p_176537_2_)
      {
          return p_176537_1_.func_175727_C(p_176537_2_) || p_176537_1_.func_175727_C(p_176537_2_.func_177976_e()) || p_176537_1_.func_175727_C(p_176537_2_.func_177974_f()) || p_176537_1_.func_175727_C(p_176537_2_.func_177978_c()) || p_176537_1_.func_175727_C(p_176537_2_.func_177968_d());
-@@ -246,26 +276,74 @@
+@@ -246,46 +276,63 @@
          return false;
      }
  
@@ -188,22 +188,39 @@
 +        this.tryCatchFire(p_176536_1_, p_176536_2_, p_176536_3_, p_176536_4_, p_176536_5_, EnumFacing.UP);
 +    }
  
+-        if (p_176536_4_.nextInt(p_176536_3_) < i)
+-        {
+-            IBlockState iblockstate = p_176536_1_.func_180495_p(p_176536_2_);
 +    private final class pXYZ {
 +    	private int x, z;
 +    	private byte y;
-+
+ 
+-            if (p_176536_4_.nextInt(p_176536_5_ + 10) < 5 && !p_176536_1_.func_175727_C(p_176536_2_))
+-            {
+-                int j = p_176536_5_ + p_176536_4_.nextInt(5) / 4;
 +    	public pXYZ(int x, int y, int z) {
 +    	    this.x = x; this.y = (byte) (y - 128); this.z = z;
 +    	}
-+
+ 
+-                if (j > 15)
+-                {
+-                    j = 15;
+-                }
 +    	public int hashCode()
 +        {
 +            return ((y * 31 + x) * 31 + z) * 17 + y;
 +        }
 +    }
-+
+ 
+-                p_176536_1_.func_180501_a(p_176536_2_, this.func_176223_P().func_177226_a(field_176543_a, Integer.valueOf(j)), 3);
+-            }
+-            else
+-            {
+-                p_176536_1_.func_175698_g(p_176536_2_);
+-            }
 +    private static WeakHashMap<World,HashMap<pXYZ,Long>> failures = new WeakHashMap<World, HashMap<pXYZ,Long>>();
-+
+ 
+-            if (iblockstate.func_177230_c() == Blocks.field_150335_W)
 +    private void tryCatchFire(World p_176536_1_, BlockPos p_176536_2_, int p_176536_3_, Random p_176536_4_, int p_176536_5_, EnumFacing face)
 +    {
 +        final IBlockState iblockstate = p_176536_1_.func_180495_p(p_176536_2_);
@@ -213,34 +230,23 @@
 +        {
 +            return; // Thermos don't let things catch fire if doFireTick is off
 +        }
-         if (p_176536_4_.nextInt(p_176536_3_) < i)
-         {
--            IBlockState iblockstate = p_176536_1_.func_180495_p(p_176536_2_);
++        if (p_176536_4_.nextInt(p_176536_3_) < i)
++        {
 +            HashMap<pXYZ,Long> lavie = failures.get(p_176536_1_);
 +            if (lavie == null) { lavie = new HashMap<pXYZ,Long>(); failures.put(p_176536_1_, lavie); }
 +            pXYZ lapoint = new pXYZ(p_176536_2_.func_177958_n(), p_176536_2_.func_177956_o(), p_176536_2_.func_177952_p());
 +            Long last = lavie.get(lapoint);
 +            long now = System.currentTimeMillis();
 +            if (last != null && now - last < 1000)
-+            {
-+                return; //Thermos premature ending
-+            }
-+            BlockPos sourcePos = p_176536_2_.func_177972_a(face); // Mohist
-+            org.bukkit.block.Block theBlock = p_176536_1_.getWorld().getBlockAt(p_176536_2_.func_177958_n(), p_176536_2_.func_177956_o(), p_176536_2_.func_177952_p());
-+            org.bukkit.block.Block sourceBlock = p_176536_1_.getWorld().getBlockAt(sourcePos.func_177958_n(), sourcePos.func_177956_o(), sourcePos.func_177952_p());
- 
-+            BlockBurnEvent event = new BlockBurnEvent(theBlock, sourceBlock);
-+            p_176536_1_.getServer().getPluginManager().callEvent(event);
-+
-+            if (event.isCancelled()) {
-+                lavie.put(lapoint, System.currentTimeMillis());
-+                return;
-+            }
-+
-             if (p_176536_4_.nextInt(p_176536_5_ + 10) < 5 && !p_176536_1_.func_175727_C(p_176536_2_))
              {
-                 int j = p_176536_5_ + p_176536_4_.nextInt(5) / 4;
-@@ -293,7 +371,7 @@
+-                Blocks.field_150335_W.func_176206_d(p_176536_1_, p_176536_2_, iblockstate.func_177226_a(BlockTNT.field_176246_a, Boolean.valueOf(true)));
++                return; //Thermos premature ending
+             }
++            lavie.put(lapoint, System.currentTimeMillis());
+         }
+     }
+ 
+@@ -293,7 +340,7 @@
      {
          for (EnumFacing enumfacing : EnumFacing.values())
          {
@@ -249,7 +255,7 @@
              {
                  return true;
              }
-@@ -314,7 +392,7 @@
+@@ -314,7 +361,7 @@
  
              for (EnumFacing enumfacing : EnumFacing.values())
              {
@@ -258,7 +264,7 @@
              }
  
              return i;
-@@ -326,9 +404,10 @@
+@@ -326,9 +373,10 @@
          return false;
      }
  
@@ -270,7 +276,7 @@
      }
  
      public boolean func_176196_c(World p_176196_1_, BlockPos p_176196_2_)
-@@ -340,7 +419,7 @@
+@@ -340,7 +388,7 @@
      {
          if (!p_189540_2_.func_180495_p(p_189540_3_.func_177977_b()).func_185896_q() && !this.func_176533_e(p_189540_2_, p_189540_3_))
          {
@@ -279,7 +285,7 @@
          }
      }
  
-@@ -350,7 +429,7 @@
+@@ -350,7 +398,7 @@
          {
              if (!p_176213_1_.func_180495_p(p_176213_2_.func_177977_b()).func_185896_q() && !this.func_176533_e(p_176213_1_, p_176213_2_))
              {
@@ -288,7 +294,7 @@
              }
              else
              {
-@@ -372,9 +451,9 @@
+@@ -372,9 +420,9 @@
              p_180655_2_.func_184134_a((double)((float)p_180655_3_.func_177958_n() + 0.5F), (double)((float)p_180655_3_.func_177956_o() + 0.5F), (double)((float)p_180655_3_.func_177952_p() + 0.5F), SoundEvents.field_187643_bs, SoundCategory.BLOCKS, 1.0F + p_180655_4_.nextFloat(), p_180655_4_.nextFloat() * 0.7F + 0.3F, false);
          }
  
@@ -300,7 +306,7 @@
              {
                  for (int j = 0; j < 2; ++j)
                  {
-@@ -385,7 +464,7 @@
+@@ -385,7 +433,7 @@
                  }
              }
  
@@ -309,7 +315,7 @@
              {
                  for (int k = 0; k < 2; ++k)
                  {
-@@ -396,7 +475,7 @@
+@@ -396,7 +444,7 @@
                  }
              }
  
@@ -318,7 +324,7 @@
              {
                  for (int l = 0; l < 2; ++l)
                  {
-@@ -407,7 +486,7 @@
+@@ -407,7 +455,7 @@
                  }
              }
  
@@ -327,7 +333,7 @@
              {
                  for (int i1 = 0; i1 < 2; ++i1)
                  {
-@@ -418,7 +497,7 @@
+@@ -418,7 +466,7 @@
                  }
              }
  
@@ -336,7 +342,7 @@
              {
                  for (int j1 = 0; j1 < 2; ++j1)
                  {
-@@ -462,8 +541,29 @@
+@@ -462,8 +510,26 @@
          return new BlockStateContainer(this, new IProperty[] {field_176543_a, field_176545_N, field_176546_O, field_176541_P, field_176539_Q, field_176542_R});
      }
  
@@ -361,9 +367,6 @@
      }
 +
 +    private void fireExtinguished(World world, BlockPos position) {
-+        if (!CraftEventFactory.callBlockFadeEvent(world.getWorld().getBlockAt(position.func_177958_n(), position.func_177956_o(), position.func_177952_p()), Blocks.field_150350_a).isCancelled()) {
-+            world.func_175698_g(position);
-+        }
 +    }
 \ No newline at end of file
  }

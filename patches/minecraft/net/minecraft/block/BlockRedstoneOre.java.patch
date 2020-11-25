@@ -45,34 +45,34 @@
          return super.func_180639_a(p_180639_1_, p_180639_2_, p_180639_3_, p_180639_4_, p_180639_5_, p_180639_6_, p_180639_7_, p_180639_8_, p_180639_9_);
      }
  
-@@ -66,10 +80,26 @@
+@@ -66,14 +80,23 @@
          }
      }
  
+-    public void func_180650_b(World p_180650_1_, BlockPos p_180650_2_, IBlockState p_180650_3_, Random p_180650_4_)
 +    private void activate(World worldIn, BlockPos pos, Entity entity)
-+    {
+     {
+-        if (this == Blocks.field_150439_ay)
 +        this.func_180691_e(worldIn, pos);
 +
 +        if (this == Blocks.field_150450_ax)
-+        {
+         {
+-            p_180650_1_.func_175656_a(p_180650_2_, Blocks.field_150450_ax.func_176223_P());
 +            if (CraftEventFactory.callEntityChangeBlockEvent(entity, pos, Blocks.field_150439_ay, 0).isCancelled()) {
 +                return;
 +            }
 +            worldIn.func_175656_a(pos, Blocks.field_150439_ay.func_176223_P());
-+        }
-+    }
-+
-     public void func_180650_b(World p_180650_1_, BlockPos p_180650_2_, IBlockState p_180650_3_, Random p_180650_4_)
-     {
-         if (this == Blocks.field_150439_ay)
-         {
-+            if (CraftEventFactory.callBlockFadeEvent(p_180650_1_.getWorld().getBlockAt(p_180650_2_.func_177958_n(), p_180650_2_.func_177956_o(), p_180650_2_.func_177952_p()), Blocks.field_150450_ax).isCancelled()) {
-+                return;
-+            }
-             p_180650_1_.func_175656_a(p_180650_2_, Blocks.field_150450_ax.func_176223_P());
          }
      }
-@@ -92,12 +122,16 @@
+ 
++    public void func_180650_b(World p_180650_1_, BlockPos p_180650_2_, IBlockState p_180650_3_, Random p_180650_4_)
++    {
++    }
++
+     public Item func_180660_a(IBlockState p_180660_1_, Random p_180660_2_, int p_180660_3_)
+     {
+         return Items.field_151137_ax;
+@@ -92,12 +115,16 @@
      public void func_180653_a(World p_180653_1_, BlockPos p_180653_2_, IBlockState p_180653_3_, float p_180653_4_, int p_180653_5_)
      {
          super.func_180653_a(p_180653_1_, p_180653_2_, p_180653_3_, p_180653_4_, p_180653_5_);

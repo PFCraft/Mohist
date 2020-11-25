@@ -34,24 +34,44 @@
                  }
              }
          }
-@@ -95,8 +96,18 @@
-             {
-                 BlockPos blockpos = p_180684_2_.func_177982_a(p_180684_1_.field_73012_v.nextInt(16) - p_180684_1_.field_73012_v.nextInt(16), p_180684_1_.field_73012_v.nextInt(8) - p_180684_1_.field_73012_v.nextInt(8), p_180684_1_.field_73012_v.nextInt(16) - p_180684_1_.field_73012_v.nextInt(16));
+@@ -87,40 +88,6 @@
  
+     private void func_180684_e(World p_180684_1_, BlockPos p_180684_2_)
+     {
+-        IBlockState iblockstate = p_180684_1_.func_180495_p(p_180684_2_);
+-
+-        if (iblockstate.func_177230_c() == this)
+-        {
+-            for (int i = 0; i < 1000; ++i)
+-            {
+-                BlockPos blockpos = p_180684_2_.func_177982_a(p_180684_1_.field_73012_v.nextInt(16) - p_180684_1_.field_73012_v.nextInt(16), p_180684_1_.field_73012_v.nextInt(8) - p_180684_1_.field_73012_v.nextInt(8), p_180684_1_.field_73012_v.nextInt(16) - p_180684_1_.field_73012_v.nextInt(16));
+-
 -                if (p_180684_1_.func_180495_p(blockpos).func_177230_c().field_149764_J == Material.field_151579_a)
-+                if (p_180684_1_.func_175623_d(blockpos))
-                 {
-+                    org.bukkit.block.Block from = p_180684_1_.getWorld().getBlockAt(p_180684_2_.func_177958_n(), p_180684_2_.func_177956_o(), p_180684_2_.func_177952_p());
-+                    org.bukkit.block.Block to = p_180684_1_.getWorld().getBlockAt(blockpos.func_177958_n(), blockpos.func_177956_o(), blockpos.func_177952_p());
-+                    BlockFromToEvent event = new BlockFromToEvent(from, to);
-+                    org.bukkit.Bukkit.getPluginManager().callEvent(event);
-+
-+                    if (event.isCancelled()) {
-+                        return;
-+                    }
-+
-+                    blockpos = new BlockPos(event.getToBlock().getX(), event.getToBlock().getY(), event.getToBlock().getZ());
-\ No newline at end of file
-                     if (p_180684_1_.field_72995_K)
-                     {
-                         for (int j = 0; j < 128; ++j)
+-                {
+-                    if (p_180684_1_.field_72995_K)
+-                    {
+-                        for (int j = 0; j < 128; ++j)
+-                        {
+-                            double d0 = p_180684_1_.field_73012_v.nextDouble();
+-                            float f = (p_180684_1_.field_73012_v.nextFloat() - 0.5F) * 0.2F;
+-                            float f1 = (p_180684_1_.field_73012_v.nextFloat() - 0.5F) * 0.2F;
+-                            float f2 = (p_180684_1_.field_73012_v.nextFloat() - 0.5F) * 0.2F;
+-                            double d1 = (double)blockpos.func_177958_n() + (double)(p_180684_2_.func_177958_n() - blockpos.func_177958_n()) * d0 + (p_180684_1_.field_73012_v.nextDouble() - 0.5D) + 0.5D;
+-                            double d2 = (double)blockpos.func_177956_o() + (double)(p_180684_2_.func_177956_o() - blockpos.func_177956_o()) * d0 + p_180684_1_.field_73012_v.nextDouble() - 0.5D;
+-                            double d3 = (double)blockpos.func_177952_p() + (double)(p_180684_2_.func_177952_p() - blockpos.func_177952_p()) * d0 + (p_180684_1_.field_73012_v.nextDouble() - 0.5D) + 0.5D;
+-                            p_180684_1_.func_175688_a(EnumParticleTypes.PORTAL, d1, d2, d3, (double)f, (double)f1, (double)f2);
+-                        }
+-                    }
+-                    else
+-                    {
+-                        p_180684_1_.func_180501_a(blockpos, iblockstate, 2);
+-                        p_180684_1_.func_175698_g(p_180684_2_);
+-                    }
+-
+-                    return;
+-                }
+-            }
+-        }
+     }
+ 
+     public int func_149738_a(World p_149738_1_)

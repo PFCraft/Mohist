@@ -115,25 +115,40 @@
              }
          }
  
-@@ -393,7 +423,7 @@
-             EntityZombieVillager entityzombievillager = new EntityZombieVillager(this.field_70170_p);
-             entityzombievillager.func_82149_j(entityvillager);
-             this.field_70170_p.func_72900_e(entityvillager);
+@@ -381,32 +411,6 @@
+     public void func_70074_a(EntityLivingBase p_70074_1_)
+     {
+         super.func_70074_a(p_70074_1_);
+-
+-        if ((this.field_70170_p.func_175659_aa() == EnumDifficulty.NORMAL || this.field_70170_p.func_175659_aa() == EnumDifficulty.HARD) && p_70074_1_ instanceof EntityVillager)
+-        {
+-            if (this.field_70170_p.func_175659_aa() != EnumDifficulty.HARD && this.field_70146_Z.nextBoolean())
+-            {
+-                return;
+-            }
+-
+-            EntityVillager entityvillager = (EntityVillager)p_70074_1_;
+-            EntityZombieVillager entityzombievillager = new EntityZombieVillager(this.field_70170_p);
+-            entityzombievillager.func_82149_j(entityvillager);
+-            this.field_70170_p.func_72900_e(entityvillager);
 -            entityzombievillager.func_180482_a(this.field_70170_p.func_175649_E(new BlockPos(entityzombievillager)), new EntityZombie.GroupData(false));
-+            entityzombievillager.func_180482_a(this.field_70170_p.func_175649_E(new BlockPos(entityzombievillager)), new GroupData(false));
-             entityzombievillager.func_190733_a(entityvillager.func_70946_n());
-             entityzombievillager.func_82227_f(entityvillager.func_70631_g_());
-             entityzombievillager.func_94061_f(entityvillager.func_175446_cd());
-@@ -404,7 +434,7 @@
-                 entityzombievillager.func_174805_g(entityvillager.func_174833_aM());
-             }
- 
+-            entityzombievillager.func_190733_a(entityvillager.func_70946_n());
+-            entityzombievillager.func_82227_f(entityvillager.func_70631_g_());
+-            entityzombievillager.func_94061_f(entityvillager.func_175446_cd());
+-
+-            if (entityvillager.func_145818_k_())
+-            {
+-                entityzombievillager.func_96094_a(entityvillager.func_95999_t());
+-                entityzombievillager.func_174805_g(entityvillager.func_174833_aM());
+-            }
+-
 -            this.field_70170_p.func_72838_d(entityzombievillager);
-+            this.field_70170_p.addEntity(entityzombievillager, CreatureSpawnEvent.SpawnReason.INFECTION);
-             this.field_70170_p.func_180498_a((EntityPlayer)null, 1026, new BlockPos(this), 0);
-         }
+-            this.field_70170_p.func_180498_a((EntityPlayer)null, 1026, new BlockPos(this), 0);
+-        }
      }
-@@ -435,12 +465,12 @@
+ 
+     public float func_70047_e()
+@@ -435,37 +439,16 @@
  
          if (p_180482_2_ == null)
          {
@@ -149,16 +164,32 @@
  
              if (entityzombie$groupdata.field_142048_a)
              {
-@@ -463,7 +493,7 @@
-                     entitychicken1.func_70012_b(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70177_z, 0.0F);
-                     entitychicken1.func_180482_a(p_180482_1_, (IEntityLivingData)null);
-                     entitychicken1.func_152117_i(true);
+                 this.func_82227_f(true);
+-
+-                if ((double)this.field_70170_p.field_73012_v.nextFloat() < 0.05D)
+-                {
+-                    List<EntityChicken> list = this.field_70170_p.<EntityChicken>func_175647_a(EntityChicken.class, this.func_174813_aQ().func_72314_b(5.0D, 3.0D, 5.0D), EntitySelectors.field_152785_b);
+-
+-                    if (!list.isEmpty())
+-                    {
+-                        EntityChicken entitychicken = list.get(0);
+-                        entitychicken.func_152117_i(true);
+-                        this.func_184220_m(entitychicken);
+-                    }
+-                }
+-                else if ((double)this.field_70170_p.field_73012_v.nextFloat() < 0.05D)
+-                {
+-                    EntityChicken entitychicken1 = new EntityChicken(this.field_70170_p);
+-                    entitychicken1.func_70012_b(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70177_z, 0.0F);
+-                    entitychicken1.func_180482_a(p_180482_1_, (IEntityLivingData)null);
+-                    entitychicken1.func_152117_i(true);
 -                    this.field_70170_p.func_72838_d(entitychicken1);
-+                    this.field_70170_p.addEntity(entitychicken1, CreatureSpawnEvent.SpawnReason.MOUNT);
-                     this.func_184220_m(entitychicken1);
-                 }
+-                    this.func_184220_m(entitychicken1);
+-                }
              }
-@@ -531,7 +561,7 @@
+         }
+ 
+@@ -531,7 +514,7 @@
  
      public void func_70645_a(DamageSource p_70645_1_)
      {
@@ -167,7 +198,7 @@
  
          if (p_70645_1_.func_76346_g() instanceof EntityCreeper)
          {
-@@ -548,6 +578,7 @@
+@@ -548,6 +531,7 @@
                  }
              }
          }

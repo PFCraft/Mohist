@@ -1,0 +1,14 @@
+--- ../src-base/minecraft/net/minecraft/world/GameRules.java
++++ ../src-work/minecraft/net/minecraft/world/GameRules.java
+@@ -10,9 +10,9 @@
+ 
+     public GameRules()
+     {
+-        this.func_180262_a("doFireTick", "true", GameRules.ValueType.BOOLEAN_VALUE);
++        this.func_180262_a("doFireTick", "false", GameRules.ValueType.BOOLEAN_VALUE);
+         this.func_180262_a("mobGriefing", "true", GameRules.ValueType.BOOLEAN_VALUE);
+-        this.func_180262_a("keepInventory", "false", GameRules.ValueType.BOOLEAN_VALUE);
++        this.func_180262_a("keepInventory", "true", GameRules.ValueType.BOOLEAN_VALUE);
+         this.func_180262_a("doMobSpawning", "true", GameRules.ValueType.BOOLEAN_VALUE);
+         this.func_180262_a("doMobLoot", "true", GameRules.ValueType.BOOLEAN_VALUE);
+         this.func_180262_a("doTileDrops", "true", GameRules.ValueType.BOOLEAN_VALUE);

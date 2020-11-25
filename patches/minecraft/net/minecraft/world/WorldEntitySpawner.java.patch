@@ -187,7 +187,7 @@
                              }
                              catch (Exception exception)
                              {
-@@ -281,9 +346,13 @@
+@@ -281,9 +346,12 @@
                                  continue;
                              }
  
@@ -197,7 +197,6 @@
 +                            // CraftBukkit start - Added a reason for spawning this creature, moved entityliving.onInitialSpawn(ientitylivingdata) up
 +                            // worldIn.spawnEntity(entityliving);
                              ientitylivingdata = entityliving.func_180482_a(p_77191_0_.func_175649_E(new BlockPos(entityliving)), ientitylivingdata);
-+                            p_77191_0_.addEntity(entityliving, CreatureSpawnEvent.SpawnReason.CHUNK_GEN);
 +                            // CraftBukkit end
 \ No newline at end of file
                              flag = true;

@@ -24,27 +24,30 @@
  
  public class BlockFarmland extends Block
  {
-@@ -72,7 +74,7 @@
+@@ -72,30 +74,17 @@
  
      public void func_180658_a(World p_180658_1_, BlockPos p_180658_2_, Entity p_180658_3_, float p_180658_4_)
      {
 -        if (!p_180658_1_.field_72995_K && p_180658_1_.field_73012_v.nextFloat() < p_180658_4_ - 0.5F && p_180658_3_ instanceof EntityLivingBase && (p_180658_3_ instanceof EntityPlayer || p_180658_1_.func_82736_K().func_82766_b("mobGriefing")) && p_180658_3_.field_70130_N * p_180658_3_.field_70130_N * p_180658_3_.field_70131_O > 0.512F)
-+        if (net.minecraftforge.common.ForgeHooks.onFarmlandTrample(p_180658_1_, p_180658_2_, Blocks.field_150346_d.func_176223_P(), p_180658_4_, p_180658_3_)) // Forge: Move logic to Entity#canTrample
-         {
-             func_190970_b(p_180658_1_, p_180658_2_);
-         }
-@@ -82,6 +84,10 @@
+-        {
+-            func_190970_b(p_180658_1_, p_180658_2_);
+-        }
+-
+         super.func_180658_a(p_180658_1_, p_180658_2_, p_180658_3_, p_180658_4_);
+     }
  
      protected static void func_190970_b(World p_190970_0_, BlockPos p_190970_1_)
      {
-+        org.bukkit.block.Block block = p_190970_0_.getWorld().getBlockAt(p_190970_1_.func_177958_n(), p_190970_1_.func_177956_o(), p_190970_1_.func_177952_p());
-+        if (CraftEventFactory.callBlockFadeEvent(block, Blocks.field_150346_d).isCancelled()) {
-+            return;
-+        }
-         p_190970_0_.func_175656_a(p_190970_1_, Blocks.field_150346_d.func_176223_P());
-         AxisAlignedBB axisalignedbb = field_194405_c.func_186670_a(p_190970_1_);
+-        p_190970_0_.func_175656_a(p_190970_1_, Blocks.field_150346_d.func_176223_P());
+-        AxisAlignedBB axisalignedbb = field_194405_c.func_186670_a(p_190970_1_);
+-
+-        for (Entity entity : p_190970_0_.func_72839_b((Entity)null, axisalignedbb))
+-        {
+-            double d0 = Math.min(axisalignedbb.field_72337_e - axisalignedbb.field_72338_b, axisalignedbb.field_72337_e - entity.func_174813_aQ().field_72338_b);
+-            entity.func_70634_a(entity.field_70165_t, entity.field_70163_u + d0 + 0.001D, entity.field_70161_v);
+-        }
+     }
  
-@@ -95,7 +101,7 @@
      private boolean func_176529_d(World p_176529_1_, BlockPos p_176529_2_)
      {
          Block block = p_176529_1_.func_180495_p(p_176529_2_.func_177984_a()).func_177230_c();
@@ -53,7 +56,7 @@
      }
  
      private boolean func_176530_e(World p_176530_1_, BlockPos p_176530_2_)
-@@ -108,7 +114,7 @@
+@@ -108,7 +97,7 @@
              }
          }
  

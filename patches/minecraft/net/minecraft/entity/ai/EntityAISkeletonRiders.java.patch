@@ -29,7 +29,7 @@
      private AbstractHorse func_188515_a(DifficultyInstance p_188515_1_)
      {
          EntitySkeletonHorse entityskeletonhorse = new EntitySkeletonHorse(this.field_188516_a.field_70170_p);
-@@ -54,10 +57,11 @@
+@@ -54,26 +57,13 @@
          entityskeletonhorse.func_110163_bv();
          entityskeletonhorse.func_110234_j(true);
          entityskeletonhorse.func_70873_a(0);
@@ -41,14 +41,22 @@
 +    @Nullable
      private EntitySkeleton func_188514_a(DifficultyInstance p_188514_1_, AbstractHorse p_188514_2_)
      {
-         EntitySkeleton entityskeleton = new EntitySkeleton(p_188514_2_.field_70170_p);
-@@ -73,7 +77,7 @@
- 
-         entityskeleton.func_184201_a(EntityEquipmentSlot.MAINHAND, EnchantmentHelper.func_77504_a(entityskeleton.func_70681_au(), entityskeleton.func_184614_ca(), (int)(5.0F + p_188514_1_.func_180170_c() * (float)entityskeleton.func_70681_au().nextInt(18)), false));
-         entityskeleton.func_184201_a(EntityEquipmentSlot.HEAD, EnchantmentHelper.func_77504_a(entityskeleton.func_70681_au(), entityskeleton.func_184582_a(EntityEquipmentSlot.HEAD), (int)(5.0F + p_188514_1_.func_180170_c() * (float)entityskeleton.func_70681_au().nextInt(18)), false));
+-        EntitySkeleton entityskeleton = new EntitySkeleton(p_188514_2_.field_70170_p);
+-        entityskeleton.func_180482_a(p_188514_1_, (IEntityLivingData)null);
+-        entityskeleton.func_70107_b(p_188514_2_.field_70165_t, p_188514_2_.field_70163_u, p_188514_2_.field_70161_v);
+-        entityskeleton.field_70172_ad = 60;
+-        entityskeleton.func_110163_bv();
+-
+-        if (entityskeleton.func_184582_a(EntityEquipmentSlot.HEAD).func_190926_b())
+-        {
+-            entityskeleton.func_184201_a(EntityEquipmentSlot.HEAD, new ItemStack(Items.field_151028_Y));
+-        }
+-
+-        entityskeleton.func_184201_a(EntityEquipmentSlot.MAINHAND, EnchantmentHelper.func_77504_a(entityskeleton.func_70681_au(), entityskeleton.func_184614_ca(), (int)(5.0F + p_188514_1_.func_180170_c() * (float)entityskeleton.func_70681_au().nextInt(18)), false));
+-        entityskeleton.func_184201_a(EntityEquipmentSlot.HEAD, EnchantmentHelper.func_77504_a(entityskeleton.func_70681_au(), entityskeleton.func_184582_a(EntityEquipmentSlot.HEAD), (int)(5.0F + p_188514_1_.func_180170_c() * (float)entityskeleton.func_70681_au().nextInt(18)), false));
 -        entityskeleton.field_70170_p.func_72838_d(entityskeleton);
-+        if (!entityskeleton.field_70170_p.addEntity(entityskeleton, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.JOCKEY)) return null; // CraftBukkit
+-        return entityskeleton;
++        return null;
 \ No newline at end of file
-         return entityskeleton;
      }
  }
