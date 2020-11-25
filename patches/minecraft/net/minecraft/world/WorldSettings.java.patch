@@ -1,0 +1,11 @@
+--- ../src-base/minecraft/net/minecraft/world/WorldSettings.java
++++ ../src-work/minecraft/net/minecraft/world/WorldSettings.java
+@@ -71,7 +71,7 @@
+ 
+     public boolean func_77164_g()
+     {
+-        return this.field_77173_c;
++        return false;
+     }
+ 
+     public WorldType func_77165_h()

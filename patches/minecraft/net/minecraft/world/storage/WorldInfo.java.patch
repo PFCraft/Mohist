@@ -25,6 +25,15 @@
  
  public class WorldInfo
  {
+@@ -48,7 +54,7 @@
+     private boolean field_76102_o;
+     private int field_76114_p;
+     private GameType field_76113_q;
+-    private boolean field_76112_r;
++    private boolean field_76112_r = false;
+     private boolean field_76111_s;
+     private boolean field_76110_t;
+     private boolean field_76109_u;
 @@ -63,9 +69,12 @@
      private double field_176153_H = 0.2D;
      private int field_176154_I = 5;
@@ -110,6 +119,15 @@
          this.field_76104_m = p_76084_1_;
      }
  
+@@ -548,7 +577,7 @@
+ 
+     public boolean func_76089_r()
+     {
+-        return this.field_76112_r;
++        return false;
+     }
+ 
+     public void func_176128_f(boolean p_176128_1_)
 @@ -708,7 +737,14 @@
  
      public void func_176144_a(EnumDifficulty p_176144_1_)
