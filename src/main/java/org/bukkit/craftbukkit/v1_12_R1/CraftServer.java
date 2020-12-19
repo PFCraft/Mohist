@@ -627,7 +627,7 @@ public final class CraftServer implements Server {
 
     @Override
     public boolean getGenerateStructures() {
-        return this.getConfigBoolean("generate-structures", false);
+        return this.getConfigBoolean("generate-structures", true);
     }
 
     @Override

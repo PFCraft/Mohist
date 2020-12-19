@@ -1,7 +1,7 @@
 package org.bukkit.command;
 
 import com.mohistmc.command.*;
-import jdk.nashorn.internal.runtime.Timing;
+import com.mohistmc.command.PluginCommand;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 import org.bukkit.Server;
@@ -29,13 +29,15 @@ public class SimpleCommandMap implements CommandMap {
         register("bukkit", new ReloadCommand("reload"));
         // Mohist
         register("mohist", new MohistCommand("mohist"));
-        register("getpluginlist", new GetPluginListCommand("getpluginlist"));
-        register("getmodlist", new GetModListCommand("getmodlist"));
-        register("whitelistmods", new WhitelistModsCommand("whitelistmods"));
-        register("downloadfile", new DownloadFileCommand("downloadfile"));
-        register("dump", new DumpCommand("dump"));
-        register("entity", new EntityCommand("entity"));
-        register("tileentity", new TileEntityCommand("tileentity"));
+        register("mohist", new GetPluginListCommand("getpluginlist"));
+        register("mohist", new GetModListCommand("getmodlist"));
+        register("mohist", new WhitelistModsCommand("whitelistmods"));
+        register("mohist", new DownloadFileCommand("downloadfile"));
+        register("mohist", new UpdateMohistCommand("updatemohist"));
+        register("mohist", new DumpCommand("dump"));
+        register("mohist", new EntityCommand("entity"));
+        register("mohist", new TileEntityCommand("tileentity"));
+        register("mohist", new PluginCommand("plugin"));
     }
 
     public void setFallbackCommands() {
@@ -139,7 +141,7 @@ public class SimpleCommandMap implements CommandMap {
             return false;
         }
 
-        try{ // Paper - use try with resources
+        try { // Paper - use try with resources
             // Note: we don't return the result of target.execute as thats success / failure, we return handled (true) or not handled (false)
             target.execute(sender, sentCommandLabel, Arrays.copyOfRange(args, 1, args.length));
         } catch (CommandException ex) {

@@ -22,7 +22,6 @@ public class EventExecutor1 implements EventExecutor {
                 return;
             }
             // Spigot start
-            boolean isAsync = event.isAsynchronous();
             method.invoke(listener, event);
             // Spigot end
         } catch (InvocationTargetException ex) {

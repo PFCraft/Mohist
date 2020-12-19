@@ -217,7 +217,7 @@ public class CraftScheduler implements BukkitScheduler {
                         }
                         return false;
                     }
-                });
+                }); // Paper
         handle(task, 0L);
         for (CraftTask taskPending = head.getNext(); taskPending != null; taskPending = taskPending.getNext()) {
             if (taskPending == task) {
@@ -256,7 +256,7 @@ public class CraftScheduler implements BukkitScheduler {
                             }
                         }
                     }
-                });
+                }); // Paper
         handle(task, 0L);
         for (CraftTask taskPending = head.getNext(); taskPending != null; taskPending = taskPending.getNext()) {
             if (taskPending == task) {
@@ -291,7 +291,7 @@ public class CraftScheduler implements BukkitScheduler {
                     }
                     CraftScheduler.this.pending.clear();
                     CraftScheduler.this.temp.clear();
-                });
+                }); // Paper
         handle(task, 0L);
         for (CraftTask taskPending = head.getNext(); taskPending != null; taskPending = taskPending.getNext()) {
             if (taskPending == task) {
@@ -447,6 +447,7 @@ public class CraftScheduler implements BukkitScheduler {
         }
         pending.addAll(temp);
         temp.clear();
+        //debugHead = debugHead.getNextHead(currentTick); // Paper
     }
 
     protected void addTask(final CraftTask task) {

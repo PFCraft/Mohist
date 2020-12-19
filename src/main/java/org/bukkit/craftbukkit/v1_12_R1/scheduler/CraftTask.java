@@ -24,6 +24,7 @@ public class CraftTask implements BukkitTask, Runnable { // Spigot
     private volatile long period;
     private long nextRun;
     public final Runnable task; // Paper
+    public Timing timings; // Paper
     private final Plugin plugin;
     private final int id;
 
